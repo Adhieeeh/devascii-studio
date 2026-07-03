@@ -1,16 +1,11 @@
-# React + Vite
+#  DevASCII — Interactive Raster Image-to-ASCII Text Compiler (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+DevASCII is an interactive client-side raster conversion workbench engineered with React. It intercepts binary media uploads, processes pixel values inside an offscreen HTML5 canvas execution buffer, and calculates standard grayscale luminosity thresholds using ITU-R coefficients to map complex images into copyable textual character art matrices instantly.
 
-Currently, two official plugins are available:
+##  Technical Highlights Tested
+*  **Canvas Extraction Buffering:** Leverages low-level canvas context memory buffers to extract individual color parameters from multi-channel image sources.
+*  **Luminance Channel Optimization:** Translates 8-bit color arrays directly into textual representations, applying mathematical contrast variance scales live inside structural rendering cycles.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+##  Running Instructions
+1. Setup package targets: `npm install`
+2. Launch dev stream workspace: `npm run dev`
