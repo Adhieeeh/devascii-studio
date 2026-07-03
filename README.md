@@ -15,7 +15,7 @@ DevASCII is an interactive client-side raster conversion workbench engineered wi
 *  **Luminance Channel Optimization:** Translates 8-bit color arrays directly into textual representations, applying mathematical contrast variance scales live inside structural rendering cycles.
 
 ##  Running Instructions
-
+------------------------------------------------------------------------------------
 
 1. Setup package targets: `npm install`
 2. Launch dev stream workspace: `npm run dev`
