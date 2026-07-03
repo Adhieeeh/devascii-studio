@@ -16,30 +16,39 @@ function App() {
   const canvasRef = useRef(null);
 
   
-  const processImageToAscii = (imageSource) => {
+const processImageToAscii = (imageSource) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
+    const sourceWidth = imageSource.naturalWidth || imageSource.width || 300;
+    const sourceHeight = imageSource.naturalHeight || imageSource.height || 300;
+
   
+    const aspectRatio = sourceHeight / sourceWidth;
     const targetWidth = scaleFactor;
-    const targetHeight = Math.round(scaleFactor * aspectRatio * 0.55); 
+    const targetHeight = Math.max(1, Math.round(scaleFactor * aspectRatio * 0.55));
 
     canvas.width = targetWidth;
     canvas.height = targetHeight;
 
-   
+  
     ctx.clearRect(0, 0, targetWidth, targetHeight);
     ctx.drawImage(imageSource, 0, 0, targetWidth, targetHeight);
 
-    
     try {
+    
       const imgData = ctx.getImageData(0, 0, targetWidth, targetHeight);
       const pixels = imgData.data;
-      let asciiMatrixString = '';
+      
+      if (!pixels || pixels.length === 0) {
+        setAsciiOutput("Error: Empty image pixel array received from buffer.");
+        return;
+      }
 
+      let asciiMatrixString = '';
       const charPool = characterSet === 'STANDARD' ? DENSER_CHARS : BLOCKS_CHARS;
 
-
+   
       for (let y = 0; y < targetHeight; y++) {
         for (let x = 0; x < targetWidth; x++) {
           const index = (y * targetWidth + x) * 4;
@@ -47,40 +56,48 @@ function App() {
           const g = pixels[index + 1];
           const b = pixels[index + 2];
 
-         
+          
           let luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
-
+         
           luminance = ((luminance / 255 - 0.5) * contrastBoost + 0.5) * 255;
           luminance = Math.min(255, Math.max(0, luminance));
 
-          
           const charIndex = Math.floor(((255 - luminance) / 256) * charPool.length);
           asciiMatrixString += charPool[charIndex] || ' ';
         }
         asciiMatrixString += '\n';
       }
 
-      setAsciiOutput(asciiMatrixString);
+     
+      setAsciiOutput(asciiMatrixString.trim() ? asciiMatrixString : "Parsing complete, but generated matrix contains blank data attributes.");
     } catch (err) {
-      setAsciiOutput(`Buffer Compilation Aborted: ${err.message}`);
+      setAsciiOutput(`Buffer Pipeline Blocked: ${err.message}`);
     }
   };
 
   
-  const handleImageUpload = (e) => {
+const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    setAsciiOutput("Processing image raster matrix buffer elements... ⏳");
 
     const reader = new FileReader();
     reader.onload = (event) => {
       const img = new Image();
-      img.onload = () => processImageToAscii(img);
+      img.onload = () => {
+ 0
+        if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+          processImageToAscii(img);
+        } else {
+          setAsciiOutput("Error: Image dimensions could not be parsed.");
+        }
+      };
       img.src = event.target.result;
     };
     reader.readAsDataURL(file);
   };
-
  
   const [copyFeedback, setCopyFeedback] = useState('📋 Copy ASCII Matrix');
   const handleCopyCode = () => {
