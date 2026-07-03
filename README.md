@@ -6,6 +6,7 @@ DevASCII is an interactive client-side raster conversion workbench engineered wi
 ## Preview
 ---------------------------------------------------------------------------------
 
+!
 
 ##  Technical Highlights Tested
 *  **Canvas Extraction Buffering:** Leverages low-level canvas context memory buffers to extract individual color parameters from multi-channel image sources.
