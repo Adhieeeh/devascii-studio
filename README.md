@@ -6,7 +6,7 @@ DevASCII is an interactive client-side raster conversion workbench engineered wi
 ## Preview
 ---------------------------------------------------------------------------------
 
-![](devAa)
+![](devAa.png)
 
 ##  Technical Highlights Tested
 ---------------------------------------------------------------------------------
